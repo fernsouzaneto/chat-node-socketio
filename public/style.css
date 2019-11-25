@@ -43,3 +43,11 @@ html, body {
     border: 1px solid #ddd;
     padding: 20px;
   }
+
+  .message{
+    background-color: lightseagreen;
+    color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+  }

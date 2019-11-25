@@ -17,18 +17,26 @@
     <form id="chat">
         <input type="text" name="username" placeholder="Digite seu usuário">
         <div class="messages"></div>
-        <input type="text" name="message" placeholder="Digite sua mensagem">
-        <button type="submit">Enviar</button>
+        <input id="txtMensagem" type="text" name="message" placeholder="Digite sua mensagem">
+        <button id="btnEnviar" type="submit">Enviar</button>
     </form>
     <script>
         var socket = io('localhost:3001');
 
         function renderMessage(message){
-            $('.messages').append('<div class="message"><strong>'+message.author+'</strong>:'+message.message+'</div>')
+            $('.messages').append('<div class="message" style="background-color:green"><strong>'+message.author+'</strong>:'+message.message+'</div>')
         }
 
+        function renderMessageEnviar(message){
+            $('.messages').append('<div class="message"><strong>'+message.author+'</strong>:'+message.message+'</div>')
+        }
         function botSayHello(data){
-            $('.messages').append('<div class="message"><strong>BOT: </strong>'+data.message+'</div>')
+            $('.messages').append('<div class="message" style="background-color:black"><strong>BOT: </strong>'+data.message+'</div>')
+        }
+
+        function botSayWelcome(data){
+            console.log('data: '+data);
+            $('.messages').append('<div class="message"><strong>BOT: </strong>'+data+'</div>')
         }
         socket.on('previousMessages', function(messages){
             for(message of messages){
@@ -44,6 +52,7 @@
             botSayHello(data)
         })
 
+
         $('#chat').submit(function(event){
             event.preventDefault();
 
@@ -54,10 +63,13 @@
                 var messageObject = {
                     author: author,
                     message: message,
+                    color: 'blue'
                 };
 
-                renderMessage(messageObject);
+                renderMessageEnviar(messageObject);
                 socket.emit('sendMessage', messageObject);
+                $('input[name=message]').val("");
+
             }
         });
     </script>

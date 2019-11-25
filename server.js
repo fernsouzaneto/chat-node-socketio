@@ -27,6 +27,7 @@ io.on('connection', socket => {
     });
 
     socket.broadcast.emit('news',{message:'novo usuario conectado!'});
+    socket.emit('news',{message:'Bem vindo(a) ao chat websocket!!'});
 });
 
 server.listen(3001);
